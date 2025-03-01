@@ -18,6 +18,7 @@
 
 #include "hev-misc.h"
 #include "hev-logger.h"
+#include "hev-config.h"
 
 #include "hev-socket-factory.h"
 
