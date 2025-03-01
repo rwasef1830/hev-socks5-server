@@ -34,6 +34,8 @@ const char *hev_config_get_auth_username (void);
 const char *hev_config_get_auth_password (void);
 
 int hev_config_get_misc_task_stack_size (void);
+int hev_config_get_misc_tcp_recv_buffer_size (void);
+int hev_config_get_misc_tcp_send_buffer_size (void);
 int hev_config_get_misc_udp_recv_buffer_size (void);
 int hev_config_get_misc_connect_timeout (void);
 int hev_config_get_misc_read_write_timeout (void);

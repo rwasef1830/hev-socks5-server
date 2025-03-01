@@ -31,6 +31,8 @@ static char password[256];
 static char log_file[1024];
 static char pid_file[1024];
 static int task_stack_size = 8192;
+static int tcp_recv_buffer_size = 0;
+static int tcp_send_buffer_size = 0;
 static int udp_recv_buffer_size = 524288;
 static int connect_timeout = 5000;
 static int read_write_timeout = 60000;
@@ -242,6 +244,10 @@ hev_config_parse_misc (yaml_document_t *doc, yaml_node_t *base)
 
         if (0 == strcmp (key, "task-stack-size"))
             task_stack_size = strtoul (value, NULL, 10);
+        else if (0 == strcmp (key, "tcp-recv-buffer-size"))
+            tcp_recv_buffer_size = strtoul (value, NULL, 10);
+        else if (0 == strcmp (key, "tcp-send-buffer-size"))
+            tcp_send_buffer_size = strtoul (value, NULL, 10);
         else if (0 == strcmp (key, "udp-recv-buffer-size"))
             udp_recv_buffer_size = strtoul (value, NULL, 10);
         else if (0 == strcmp (key, "connect-timeout"))
@@ -471,6 +477,18 @@ int
 hev_config_get_misc_task_stack_size (void)
 {
     return task_stack_size;
+}
+
+int
+hev_config_get_misc_tcp_recv_buffer_size (void)
+{
+    return tcp_recv_buffer_size;
+}
+
+int
+hev_config_get_misc_tcp_send_buffer_size (void)
+{
+    return tcp_send_buffer_size;
 }
 
 int

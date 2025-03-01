@@ -114,6 +114,24 @@ hev_socket_factory_get (HevSocketFactory *self)
         LOG_E ("socket factory listen");
         goto exit_close;
     }
+    
+    res = hev_config_get_misc_tcp_recv_buffer_size ();
+    if (res != 0) {
+        res = setsockopt (fd, SOL_SOCKET, SO_RCVBUF, &res, sizeof (res));
+    }
+    if (res < 0) {
+        LOG_E ("socket factory set rcvbuf");
+        goto exit_close;
+    }
+    
+    res = hev_config_get_misc_tcp_send_buffer_size ();
+    if (res != 0) {
+        res = setsockopt (fd, SOL_SOCKET, SO_SNDBUF, &res, sizeof (res));
+    }
+    if (res < 0) {
+        LOG_E ("socket factory set sndbuf");
+        goto exit_close;
+    }
 
     return fd;
 

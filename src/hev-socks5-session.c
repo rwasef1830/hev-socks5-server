@@ -100,6 +100,24 @@ hev_socks5_session_bind (HevSocks5 *self, int fd, const struct sockaddr *dest)
         if (res < 0)
             return -1;
     }
+    
+    res = hev_config_get_misc_tcp_recv_buffer_size ();
+    if (res != 0) {
+        res = setsockopt (fd, SOL_SOCKET, SO_RCVBUF, &res, sizeof (res));
+    }
+    if (res < 0) {
+        LOG_E ("socket session set rcvbuf");
+        return -1;
+    }
+    
+    res = hev_config_get_misc_tcp_send_buffer_size ();
+    if (res != 0) {
+        res = setsockopt (fd, SOL_SOCKET, SO_SNDBUF, &res, sizeof (res));
+    }
+    if (res < 0) {
+        LOG_E ("socket session set sndbuf");
+        return -1;
+    }
 
     return 0;
 }
